@@ -63,10 +63,11 @@ def checkinputrange(xname,xval,xmin,xmax):
         print ('Option {:} with value {:} is less than {:}, which is not recommended')#.format(xname,xval,xmin,xmax)
 class varpro_opts(object):
     def __init__(self,lambda0=1e-10,maxlam=52,lamup=2.0,lamdown=2.0,ifmarq=1,maxiter=60,tol=1.0e-6,eps_stall=1.0e-12,iffulljac=1):
+    #def __init__(self,lambda0=1e-10,maxlam=10,lamup=1e-2,lamdown=1e-2,ifmarq=1,maxiter=30,tol=1.0e-12,eps_stall=1.0e-4,iffulljac=1):
         checkinputrange('lambda0',lambda0,0.0,1.0e16)
         checkinputrange('maxlam',maxlam,0,200)
-        checkinputrange('lamup',lamup,1.0,1.0e16)
-        checkinputrange('lamdown',lamdown,1.0,1.0e16)
+        checkinputrange('lamup',lamup,0.001,1.0e16)
+        checkinputrange('lamdown',lamdown,0.001,1.0e16)
         checkinputrange('ifmarq',ifmarq,-np.Inf,np.Inf)
         checkinputrange('maxiter',maxiter,0,1e12)
         checkinputrange('tol',tol,0,1e16)

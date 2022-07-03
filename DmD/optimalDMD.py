@@ -11,7 +11,7 @@ import sys
 
 
 ############ NOW BEGIN PRELIMINARY OPTDMD CODE ##################    
-def optdmd(X,t,r,imode):
+def optdmd(X,t,r,imode, custom_alpha_init = False, alpha_init_input=None ,opts_from_main=False , opts=None):
     
     #CHECKS TO ENSURE THAT U IS PRE-COMPUTED IF IT NEEDS TO BE
     u,_,_=np.linalg.svd(X,full_matrices=False)
@@ -36,10 +36,17 @@ def optdmd(X,t,r,imode):
     v1=v1[:,:r]
     s1inv=np.diag(1.0/s1[:r])
     
-    atilde=u1.conj().T.dot(dx.dot(v1.dot(s1inv)))
-    alpha_init=np.linalg.eig(atilde)[0]
-    ux1=None;ux2=None;atilde=None;t1=None;t2=None;dx=None;xin=None;
+    if custom_alpha_init == False:
+        atilde=u1.conj().T.dot(dx.dot(v1.dot(s1inv)))
+        alpha_init=np.linalg.eig(atilde)[0]
+
+        ux1=None;ux2=None;atilde=None;t1=None;t2=None;dx=None;xin=None;
+
     ##---ELSE USE THE INITIAL PROVIDED GUESS
+
+    # for r=2
+    if custom_alpha_init == True:
+        alpha_init = alpha_init_input
     ###--IF IMODE=2 (using projected version) DO PROJECTED VERSION
     ### (todo)
     ### OTHERWISE, FIT ALL OF THE DATA
@@ -54,7 +61,12 @@ def optdmd(X,t,r,imode):
     phi=lambda a,t:varpro2expfun(a,t)
     dphi=lambda a,t,i:varpro2dexpfun(a,t,i)
     alpha_init=alpha_init
-    opts=varpro_opts()
+
+    if opts_from_main == True:
+        opts = opts
+    else:
+        #opts=varpro_opts(lambda0=1e6,maxlam=10,lamup=0.01, lamdown=0.01,maxiter=1000,tol=1e-15,eps_stall=1e-4)
+        print('porco dio')
 
     #djaca,djacb,dphitemp,U,b,alpha,t=varpro2(y,t,phi,dphi,m,n,iss,ia,alpha_init,opts)
     w,e,niter,err,imode,alphas=varpro2(y,t,phi,dphi,m,n,iss,ia,alpha_init,opts)
