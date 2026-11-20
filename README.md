@@ -13,3 +13,8 @@ els, Neural Network to model and predict the dynamic of some
 historical problems such as Predator-Prey model, the Kuramoto-
 Sivashinsky equations and Lorenz equations and compare the
 results with well defined solutions.
+
+
+## Full Report
+The complete methodology, numerical experiments, and results are
+available in the [Full Project Report](./Leonardo_Iacussi_Modeling_from_Measurements_report.pdf).
